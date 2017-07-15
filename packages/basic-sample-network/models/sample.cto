@@ -1,12 +1,19 @@
 /**
  * Sample business network definition.
  */
-namespace org.acme.sample
+namespace org.dltdojo.ex
 
 asset SampleAsset identified by assetId {
   o String assetId
   --> SampleParticipant owner
   o String value
+}
+
+asset DdjAsset identified by assetId {
+  o String assetId
+  --> SampleParticipant owner
+  o String value
+  o Double foo
 }
 
 participant SampleParticipant identified by participantId {
@@ -20,8 +27,22 @@ transaction SampleTransaction {
   o String newValue
 }
 
+transaction DdjTransaction {
+  --> DdjAsset asset
+  o String newValue
+  o Double newFoo
+}
+
 event SampleEvent {
   --> SampleAsset asset
   o String oldValue
   o String newValue
+}
+
+event DdjEvent {
+  --> DdjAsset asset
+  o String oldValue
+  o String newValue
+  o Double oldFoo
+  o Double newFoo
 }

@@ -12,9 +12,47 @@
  * limitations under the License.
  */
 
+ /**
+ * Ddj sample transaction processor function.
+ * @param {org.dltdojo.ex.DdjTransaction} tx The ddj sample transaction instance.
+ * @transaction
+ */
+function ddjTransaction(tx) {
+
+    // Save the old value of the asset.
+    var oldValue = tx.asset.value;
+    var oldFoo = tx.asset.foo;
+
+    // Update the asset with the new value.
+    tx.asset.value = tx.newValue;
+    tx.asset.foo = tx.newFoo;
+
+    // Get the asset registry for the asset.
+    return getAssetRegistry('org.dltdojo.ex.DdjAsset')
+        .then(function (assetRegistry) {
+
+            // Update the asset in the asset registry.
+            return assetRegistry.update(tx.asset);
+
+        })
+        .then(function () {
+
+            // Emit an event for the modified asset.
+            var event = getFactory().newEvent('org.dltdojo.ex', 'DdjEvent');
+            event.asset = tx.asset;
+            event.oldValue = oldValue;
+            event.newValue = tx.newValue;
+            event.oldFoo = oldFoo;
+            event.newFoo = tx.newFoo;
+            emit(event);
+
+        });
+
+}
+
 /**
  * Sample transaction processor function.
- * @param {org.acme.sample.SampleTransaction} tx The sample transaction instance.
+ * @param {org.dltdojo.ex.SampleTransaction} tx The sample transaction instance.
  * @transaction
  */
 function sampleTransaction(tx) {
@@ -26,7 +64,7 @@ function sampleTransaction(tx) {
     tx.asset.value = tx.newValue;
 
     // Get the asset registry for the asset.
-    return getAssetRegistry('org.acme.sample.SampleAsset')
+    return getAssetRegistry('org.dltdojo.ex.SampleAsset')
         .then(function (assetRegistry) {
 
             // Update the asset in the asset registry.
@@ -36,7 +74,7 @@ function sampleTransaction(tx) {
         .then(function () {
 
             // Emit an event for the modified asset.
-            var event = getFactory().newEvent('org.acme.sample', 'SampleEvent');
+            var event = getFactory().newEvent('org.dltdojo.ex', 'SampleEvent');
             event.asset = tx.asset;
             event.oldValue = oldValue;
             event.newValue = tx.newValue;
