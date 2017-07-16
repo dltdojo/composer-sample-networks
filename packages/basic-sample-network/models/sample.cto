@@ -33,6 +33,12 @@ transaction DdjTransaction {
   o Double newFoo
 }
 
+transaction PostTransaction{
+  o Double a
+  o Double b
+  --> DdjAsset asset
+}
+
 event SampleEvent {
   --> SampleAsset asset
   o String oldValue

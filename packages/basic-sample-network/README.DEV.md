@@ -1,6 +1,10 @@
 # Basic Sample Business Network
 
-* Hyperledger Composer Playground https://composer-playground.mybluemix.net/editor
+* Hyperledger Composer Playground https://composer-playground.mybluemix.net/
+* Part 2 - Using HyperLedger Fabric v1 in (Re)insurance — ChainThat  http://www.chainthat.com/updates/2017/7/12/part-2-using-hyperledger-fabric-v1-in-reinsurance
+* As a user I can call an external REST Service from a TP Function · Issue #1004 · hyperledger/composer  https://github.com/hyperledger/composer/issues/1004
+* Calling external REST services | Hyperledger Composer  https://hyperledger.github.io/composer/integrating/call-out.html
+* coinmarketcap test api: https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=10
 
 ```
 $ npm run prepublish

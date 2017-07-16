@@ -12,11 +12,11 @@
  * limitations under the License.
  */
 
- /**
- * Ddj sample transaction processor function.
- * @param {org.dltdojo.ex.DdjTransaction} tx The ddj sample transaction instance.
- * @transaction
- */
+/**
+* Ddj sample transaction processor function.
+* @param {org.dltdojo.ex.DdjTransaction} tx The ddj sample transaction instance.
+* @transaction
+*/
 function ddjTransaction(tx) {
 
     // Save the old value of the asset.
@@ -48,6 +48,33 @@ function ddjTransaction(tx) {
 
         });
 
+}
+
+/**
+ * Handle a POST transaction, calling coinmarketcap api
+ * @param {org.dltdojo.ex.PostTransaction} postTransaction - the transaction to be processed
+ * @transaction
+ * @return {Promise} a promise that resolves when transaction processing is complete
+ */
+function handlePost(postTransaction) {
+    // 
+    // coinmarketcap api return error: status 0 on composer-playground.mybluemix.net
+    // var url = 'https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=10';
+    // 
+    var url = 'https://composer-node-red.mybluemix.net/compute';
+
+    timestamp
+
+    return post(url, postTransaction)
+        .then(function (result) {
+            //alert(JSON.stringify(result));
+            postTransaction.asset.value = 'a=' + postTransaction.a + ', b=' + postTransaction.b + ', sum=' + result.body.sum + ', timestamp=' + result.body.timestamp;
+            postTransaction.asset.foo = result.body.sum;
+            return getAssetRegistry('org.dltdojo.ex.DdjAsset')
+                .then(function (assetRegistry) {
+                    return assetRegistry.update(postTransaction.asset);
+                });
+        });
 }
 
 /**
