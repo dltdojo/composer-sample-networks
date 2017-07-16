@@ -51,7 +51,7 @@ function ddjTransaction(tx) {
 }
 
 /**
- * Handle a POST transaction, calling coinmarketcap api
+ * Handle a POST transaction, calling node-red api
  * @param {org.dltdojo.ex.PostTransaction} postTransaction - the transaction to be processed
  * @transaction
  * @return {Promise} a promise that resolves when transaction processing is complete
@@ -62,8 +62,6 @@ function handlePost(postTransaction) {
     // var url = 'https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=10';
     // 
     var url = 'https://composer-node-red.mybluemix.net/compute';
-
-    timestamp
 
     return post(url, postTransaction)
         .then(function (result) {
